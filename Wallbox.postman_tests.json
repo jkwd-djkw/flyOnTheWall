@@ -1,0 +1,1726 @@
+{
+	"info": {
+		"_postman_id": "23bc2f74-3ded-4cb0-9c01-0fd592b1477e",
+		"name": "Wallbox",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Positives",
+			"item": [
+				{
+					"name": "Add new charger",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test(\"New charger data is saved\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.name).to.eql(\"Pulsar Plus3\");",
+									"    pm.expect(jsonData.type).to.eql(2);",
+									"    pm.expect(jsonData.chargingPower).to.eql(7.4);",
+									"    pm.expect(jsonData.color).to.eql(\"black\");",
+									"    pm.expect(jsonData.installation).to.eql(\"none\");",
+									"    pm.expect(jsonData.warranty).to.eql(\"2 years\");",
+									"    pm.expect(jsonData.accessories).to.eql(true);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{name: \"Pulsar Plus3\", type: 2, chargingPower: 7.4, color: \"black\", installation: \"none\", warranty: \"2 years\", accessories: true}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://crudcrud.com/api/{{your_id}}/chargers",
+							"protocol": "https",
+							"host": [
+								"crudcrud",
+								"com"
+							],
+							"path": [
+								"api",
+								"{{your_id}}",
+								"chargers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get whole list of chargers",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Charger list has more than 1 item\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    console.log(jsonData.length);",
+									"    pm.expect(jsonData.length).to.be.above(1);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.sendRequest({",
+									"    url: 'https://crudcrud.com/api/'+pm.collectionVariables.get(\"your_id\")+'/chargers',",
+									"    method: 'POST',",
+									"    header: {",
+									"        'content-type': 'application/json',",
+									"    },",
+									"    body:{",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({name: \"Pulsar Plus1\", type: 2, chargingPower: 7.4, color: \"black\", installation: \"none\", warranty: \"2 years\", accessories: true})},",
+									"}, function (err, res) {",
+									"    if (err) {",
+									"        console.log(err);",
+									"    } else {",
+									"    console.log(res.json());}",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: 'https://crudcrud.com/api/'+pm.collectionVariables.get(\"your_id\")+'/chargers',",
+									"    method: 'POST',",
+									"    header: {",
+									"        'content-type': 'application/json',",
+									"    },",
+									"    body:{",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({name: \"Pulsar Plus1\", type: 2, chargingPower: 7.4, color: \"black\", installation: \"none\", warranty: \"2 years\", accessories: true})},",
+									"}, function (err, res) {",
+									"    if (err) {",
+									"        console.log(err);",
+									"    } else {",
+									"    console.log(res.json());}",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://crudcrud.com/api/{{your_id}}/chargers",
+							"protocol": "https",
+							"host": [
+								"crudcrud",
+								"com"
+							],
+							"path": [
+								"api",
+								"{{your_id}}",
+								"chargers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit specific charger information",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Charger data is updated\", function () {",
+									"    var responseBody = pm.collectionVariables.get(\"response\");",
+									"    console.log(responseBody);",
+									"    pm.expect(responseBody.name).to.eql(\"Pulsar Plus (edited)\");",
+									"    pm.expect(responseBody.type).to.eql(3);",
+									"    pm.expect(responseBody.chargingPower).to.eql(7.7);",
+									"    pm.expect(responseBody.color).to.eql(\"white\");",
+									"    pm.expect(responseBody.installation).to.eql(\"basic\");",
+									"    pm.expect(responseBody.warranty).to.eql(\"5 years\");",
+									"    pm.expect(responseBody.accessories).to.eql(false);",
+									"});",
+									"",
+									"//method to check if the charger was deleted:",
+									"//1. get request with item_id",
+									"//2. saves response body as a collection variable that can be used to do assertion ",
+									"pm.sendRequest({",
+									"    url: 'https://crudcrud.com/api/'+pm.collectionVariables.get(\"your_id\")+'/chargers/'+pm.collectionVariables.get(\"item_id\"),",
+									"    method: 'GET',  ",
+									"}, function (err, res) {",
+									"    if (err) {",
+									"        console.log(err);",
+									"    } else {",
+									"    console.log(res.json());",
+									"    var responseBody = res.json();",
+									"    pm.collectionVariables.set(\"response\", responseBody);",
+									"    }",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.sendRequest({",
+									"    url: 'https://crudcrud.com/api/'+pm.collectionVariables.get(\"your_id\")+'/chargers',",
+									"    method: 'POST',",
+									"    header: {",
+									"        'content-type': 'application/json',",
+									"    },",
+									"    body:{",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({name: \"Pulsar Plus3\", type: 2, chargingPower: 7.4, color: \"black\", installation: \"none\", warranty: \"2 years\", accessories: true})},",
+									"}, function (err, res) {",
+									"    if (err) {",
+									"        console.log(err);",
+									"    } else {",
+									"    console.log(res.json())",
+									"    var responseBody = res.json();",
+									"    pm.collectionVariables.set(\"item_id\", responseBody._id);}",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{name: \"Pulsar Plus (edited)\", type: 3, chargingPower: 7.7, color: \"white\", installation: \"basic\", warranty: \"5 years\", accessories: false}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://crudcrud.com/api/{{your_id}}/chargers/{{item_id}}",
+							"protocol": "https",
+							"host": [
+								"crudcrud",
+								"com"
+							],
+							"path": [
+								"api",
+								"{{your_id}}",
+								"chargers",
+								"{{item_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get specific charger",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Charger information is returned\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.name).to.eql(\"Pulsar Plus3\");",
+									"    pm.expect(jsonData.type).to.eql(2);",
+									"    pm.expect(jsonData.chargingPower).to.eql(7.4);",
+									"    pm.expect(jsonData.color).to.eql(\"black\");",
+									"    pm.expect(jsonData.installation).to.eql(\"none\");",
+									"    pm.expect(jsonData.warranty).to.eql(\"2 years\");",
+									"    pm.expect(jsonData.accessories).to.eql(true);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.sendRequest({",
+									"    url: 'https://crudcrud.com/api/'+pm.collectionVariables.get(\"your_id\")+'/chargers',",
+									"    method: 'POST',",
+									"    header: {",
+									"        'content-type': 'application/json',",
+									"    },",
+									"    body:{",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({name: \"Pulsar Plus3\", type: 2, chargingPower: 7.4, color: \"black\", installation: \"none\", warranty: \"2 years\", accessories: true})},",
+									"}, function (err, res) {",
+									"    if (err) {",
+									"        console.log(err);",
+									"    } else {",
+									"    console.log(res.json())",
+									"    var responseBody = res.json();",
+									"    pm.collectionVariables.set(\"item_id\", responseBody._id);}",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://crudcrud.com/api/{{your_id}}/chargers/{{item_id}}",
+							"protocol": "https",
+							"host": [
+								"crudcrud",
+								"com"
+							],
+							"path": [
+								"api",
+								"{{your_id}}",
+								"chargers",
+								"{{item_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove specific charger",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response body is empty\", function () {",
+									"    pm.response.to.not.be.withBody;",
+									"});",
+									"",
+									"pm.test(\"Charger is deleted\", function(){",
+									"    var responseBody = pm.collectionVariables.get(\"response\");",
+									"    console.log(responseBody);",
+									"    pm.expect(responseBody.status).to.eql(404);",
+									"    pm.expect(responseBody.title).to.eql(\"Not Found\");",
+									"});",
+									"",
+									"//method to check if the charger was deleted:",
+									"//1. get request with item_id",
+									"//2. saves response body as a collection variable that can be used to do assertion ",
+									"pm.sendRequest({",
+									"    url: 'https://crudcrud.com/api/'+pm.collectionVariables.get(\"your_id\")+'/chargers/'+pm.collectionVariables.get(\"item_id\"),",
+									"    method: 'GET',",
+									"}, function (err, res) {",
+									"    if (err) {",
+									"        console.log(err);",
+									"    } else {",
+									"    console.log(res.json());",
+									"    var responseBody = res.json();",
+									"    pm.collectionVariables.set(\"response\", responseBody);",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.sendRequest({",
+									"    url: 'https://crudcrud.com/api/'+pm.collectionVariables.get(\"your_id\")+'/chargers',",
+									"    method: 'POST',",
+									"    header: {",
+									"        'content-type': 'application/json',",
+									"    },",
+									"    body:{",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({name: \"Pulsar Plus1\", type: 2, chargingPower: 7.4, color: \"black\", installation: \"none\", warranty: \"2 years\", accessories: true})},",
+									"}, function (err, res) {",
+									"    if (err) {",
+									"        console.log(err);",
+									"    } else {",
+									"    var responseBody = res.json();",
+									"    pm.collectionVariables.set(\"item_id\", responseBody._id);}",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://crudcrud.com/api/{{your_id}}/chargers/{{item_id}}",
+							"protocol": "https",
+							"host": [
+								"crudcrud",
+								"com"
+							],
+							"path": [
+								"api",
+								"{{your_id}}",
+								"chargers",
+								"{{item_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Performance",
+			"item": [
+				{
+					"name": "CREATE: Respons should be less than 250ms",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 250ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(250);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{name: \"Pulsar Plus3\", type: 2, chargingPower: 7.4, color: \"black\", installation: \"none\", warranty: \"2 years\", accessories: true}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://crudcrud.com/api/{{your_id}}/chargers",
+							"protocol": "https",
+							"host": [
+								"crudcrud",
+								"com"
+							],
+							"path": [
+								"api",
+								"{{your_id}}",
+								"chargers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET ALL: Respons should be less than 250ms",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 250ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(250);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.sendRequest({",
+									"    url: 'https://crudcrud.com/api/'+pm.collectionVariables.get(\"your_id\")+'/chargers',",
+									"    method: 'POST',",
+									"    header: {",
+									"        'content-type': 'application/json',",
+									"    },",
+									"    body:{",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({name: \"Pulsar Plus3\", type: 2, chargingPower: 7.4, color: \"black\", installation: \"none\", warranty: \"2 years\", accessories: true})},",
+									"}, function (err, res) {",
+									"    if (err) {",
+									"        console.log(err);",
+									"    } else {",
+									"    var responseBody = res.json();",
+									"    pm.collectionVariables.set(\"item_id\", responseBody._id);}",
+									"    ",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://crudcrud.com/api/{{your_id}}/chargers",
+							"protocol": "https",
+							"host": [
+								"crudcrud",
+								"com"
+							],
+							"path": [
+								"api",
+								"{{your_id}}",
+								"chargers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "EDIT: Respons should be less than 250ms",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 250ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(250);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.sendRequest({",
+									"    url: 'https://crudcrud.com/api/'+pm.collectionVariables.get(\"your_id\")+'/chargers',",
+									"    method: 'POST',",
+									"    header: {",
+									"        'content-type': 'application/json',",
+									"    },",
+									"    body:{",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({name: \"Pulsar Plus3\", type: 2, chargingPower: 7.4, color: \"black\", installation: \"none\", warranty: \"2 years\", accessories: true})},",
+									"}, function (err, res) {",
+									"    if (err) {",
+									"        console.log(err);",
+									"    } else {",
+									"    console.log(res.json())",
+									"    var responseBody = res.json();",
+									"    pm.collectionVariables.set(\"item_id\", responseBody._id);}",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{name: \"Pulsar Plus edited\", type: 2, colour: \"black\", installation: \"none\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://crudcrud.com/api/{{your_id}}/chargers/{{item_id}}",
+							"protocol": "https",
+							"host": [
+								"crudcrud",
+								"com"
+							],
+							"path": [
+								"api",
+								"{{your_id}}",
+								"chargers",
+								"{{item_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET SPECIFIC: Respons should be less than 250ms",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 250ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(250);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.sendRequest({",
+									"    url: 'https://crudcrud.com/api/'+pm.collectionVariables.get(\"your_id\")+'/chargers',",
+									"    method: 'POST',",
+									"    header: {",
+									"        'content-type': 'application/json',",
+									"    },",
+									"    body:{",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({name: \"Pulsar Plus3\", type: 2, chargingPower: 7.4, color: \"black\", installation: \"none\", warranty: \"2 years\", accessories: true})},",
+									"}, function (err, res) {",
+									"    if (err) {",
+									"        console.log(err);",
+									"    } else {",
+									"    console.log(res.json())",
+									"    var responseBody = res.json();",
+									"    pm.collectionVariables.set(\"item_id\", responseBody._id);}",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://crudcrud.com/api/{{your_id}}/chargers/{{item_id}}",
+							"protocol": "https",
+							"host": [
+								"crudcrud",
+								"com"
+							],
+							"path": [
+								"api",
+								"{{your_id}}",
+								"chargers",
+								"{{item_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE: Respons should be less than 250ms",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 250ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(250);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.sendRequest({",
+									"    url: 'https://crudcrud.com/api/'+pm.collectionVariables.get(\"your_id\")+'/chargers',",
+									"    method: 'POST',",
+									"    header: {",
+									"        'content-type': 'application/json',",
+									"    },",
+									"    body:{",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({name: \"Pulsar Plus3\", type: 2, chargingPower: 7.4, color: \"black\", installation: \"none\", warranty: \"2 years\", accessories: true})},",
+									"}, function (err, res) {",
+									"    if (err) {",
+									"        console.log(err);",
+									"    } else {",
+									"    console.log(res.json())",
+									"    var responseBody = res.json();",
+									"    pm.collectionVariables.set(\"item_id\", responseBody._id);}",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://crudcrud.com/api/{{your_id}}/chargers/{{item_id}}",
+							"protocol": "https",
+							"host": [
+								"crudcrud",
+								"com"
+							],
+							"path": [
+								"api",
+								"{{your_id}}",
+								"chargers",
+								"{{item_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Negatives",
+			"item": [
+				{
+					"name": "EDIT: Show error \"Not Found\" if the item doesn't exist",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"pm.test(\"Error msg is shown\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.title).to.eql(\"Not Found\");",
+									"    pm.expect(jsonData.status).to.eql(404);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.sendRequest({",
+									"    url: 'https://crudcrud.com/api/'+pm.collectionVariables.get(\"your_id\")+'/chargers/'+pm.collectionVariables.get(\"item_id\"),",
+									"    method: 'DELETE',",
+									"}, function (err, res) {",
+									"    if (err) {",
+									"        console.log(err);",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{name: \"Pulsar Plus +\", type: 2, colour: \"black\", installation: \"none\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://crudcrud.com/api/{{your_id}}/chargers/{{item_id}}",
+							"protocol": "https",
+							"host": [
+								"crudcrud",
+								"com"
+							],
+							"path": [
+								"api",
+								"{{your_id}}",
+								"chargers",
+								"{{item_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET SPECIFIC: Show error \"Not Found\" if the item doesn't exist",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"pm.test(\"Error msg is shown\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.title).to.eql(\"Not Found\");",
+									"    pm.expect(jsonData.status).to.eql(404);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.sendRequest({",
+									"    url: 'https://crudcrud.com/api/'+pm.collectionVariables.get(\"your_id\")+'/chargers/'+pm.collectionVariables.get(\"item_id\"),",
+									"    method: 'DELETE',",
+									"}, function (err, res) {",
+									"    if (err) {",
+									"        console.log(err);",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://crudcrud.com/api/{{your_id}}/chargers/{{item_id}}",
+							"protocol": "https",
+							"host": [
+								"crudcrud",
+								"com"
+							],
+							"path": [
+								"api",
+								"{{your_id}}",
+								"chargers",
+								"{{item_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE: Show error \"Not Found\" if the item doesn't exist",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"pm.test(\"Error msg is shown\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.title).to.eql(\"Not Found\");",
+									"    pm.expect(jsonData.status).to.eql(404);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.sendRequest({",
+									"    url: 'https://crudcrud.com/api/'+pm.collectionVariables.get(\"your_id\")+'/chargers/'+pm.collectionVariables.get(\"item_id\"),",
+									"    method: 'DELETE',",
+									"}, function (err, res) {",
+									"    if (err) {",
+									"        console.log(err);",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://crudcrud.com/api/{{your_id}}/chargers/{{item_id}}",
+							"protocol": "https",
+							"host": [
+								"crudcrud",
+								"com"
+							],
+							"path": [
+								"api",
+								"{{your_id}}",
+								"chargers",
+								"{{item_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Validations",
+			"item": [
+				{
+					"name": "Endpoint ID not valid",
+					"item": [
+						{
+							"name": "CREATE: Show \"Endpoint doesn't exist\" error if the your_id is not valid",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"    pm.response.to.have.status(\"Bad Request\");",
+											"});",
+											"",
+											"pm.test(\"Error msg is shown\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"Endpoint doesn't exist.\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{name: \"Pulsar Plus3\", type: 2, chargingPower: 7.4, color: \"black\", installation: \"none\", warranty: \"2 years\", accessories: true}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://crudcrud.com/api/1/chargers",
+									"protocol": "https",
+									"host": [
+										"crudcrud",
+										"com"
+									],
+									"path": [
+										"api",
+										"1",
+										"chargers"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET ALL: Show \"Endpoint doesn't exist\" error if the your_id is not valid",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"    pm.response.to.have.status(\"Bad Request\");",
+											"});",
+											"",
+											"pm.test(\"Error msg is shown\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"Endpoint doesn't exist.\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://crudcrud.com/api/1/chargers",
+									"protocol": "https",
+									"host": [
+										"crudcrud",
+										"com"
+									],
+									"path": [
+										"api",
+										"1",
+										"chargers"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "EDIT: Show \"Endpoint doesn't exist\" error if the your_id is not valid",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"    pm.response.to.have.status(\"Bad Request\");",
+											"});",
+											"",
+											"pm.test(\"Error msg is shown\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"Endpoint doesn't exist.\");",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{name: \"Pulsar Plus +\", type: 2, colour: \"black\", installation: \"none\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://crudcrud.com/api/1/chargers/6123902edc46c203e8b3c05f",
+									"protocol": "https",
+									"host": [
+										"crudcrud",
+										"com"
+									],
+									"path": [
+										"api",
+										"1",
+										"chargers",
+										"6123902edc46c203e8b3c05f"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET SPECIFIC: Show \"Endpoint doesn't exist\" error if the your_id is not valid",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"    pm.response.to.have.status(\"Bad Request\");",
+											"});",
+											"",
+											"pm.test(\"Error msg is shown\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"Endpoint doesn't exist.\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://crudcrud.com/api/1/chargers/6123902edc46c203e8b3c05f",
+									"protocol": "https",
+									"host": [
+										"crudcrud",
+										"com"
+									],
+									"path": [
+										"api",
+										"1",
+										"chargers",
+										"6123902edc46c203e8b3c05f"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DELETE: Show \"Endpoint doesn't exist\" error if the your_id is not valid",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"    pm.response.to.have.status(\"Bad Request\");",
+											"});",
+											"",
+											"pm.test(\"Error msg is shown\", function () {",
+											"    pm.expect(pm.response.text()).to.include(\"Endpoint doesn't exist.\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://crudcrud.com/api/1/chargers/6124c946dc46c203e8b3c1b1",
+									"protocol": "https",
+									"host": [
+										"crudcrud",
+										"com"
+									],
+									"path": [
+										"api",
+										"1",
+										"chargers",
+										"6124c946dc46c203e8b3c1b1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Empty payload",
+					"item": [
+						{
+							"name": "CREATE: Show \"Unsupported Media Type\" if  empty payload sent",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 415\", function () {",
+											"    pm.response.to.have.status(415);",
+											"});",
+											"",
+											"pm.test(\"Error msg is shown\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.title).to.eql(\"Unsupported Media Type\");",
+											"    pm.expect(jsonData.status).to.eql(415);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "https://crudcrud.com/api/{{your_id}}/chargers",
+									"protocol": "https",
+									"host": [
+										"crudcrud",
+										"com"
+									],
+									"path": [
+										"api",
+										"{{your_id}}",
+										"chargers"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "EDIT: Show \"Unsupported Media Type\" if  empty payload sent",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 415\", function () {",
+											"    pm.response.to.have.status(415);",
+											"});",
+											"",
+											"pm.test(\"Error msg is shown\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.title).to.eql(\"Unsupported Media Type\");",
+											"    pm.expect(jsonData.status).to.eql(415);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.sendRequest({",
+											"    url: 'https://crudcrud.com/api/'+pm.collectionVariables.get(\"your_id\")+'/chargers',",
+											"    method: 'POST',",
+											"    header: {",
+											"        'content-type': 'application/json',",
+											"    },",
+											"    body:{",
+											"        mode: 'raw',",
+											"        raw: JSON.stringify({name: \"Pulsar Plus3\", type: 2, chargingPower: 7.4, color: \"black\", installation: \"none\", warranty: \"2 years\", accessories: true})},",
+											"}, function (err, res) {",
+											"    if (err) {",
+											"        console.log(err);",
+											"    } else {",
+											"    var responseBody = res.json();",
+											"    pm.collectionVariables.set(\"item_id\", responseBody._id);}",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "https://crudcrud.com/api/{{your_id}}/chargers/{{item_id}}",
+									"protocol": "https",
+									"host": [
+										"crudcrud",
+										"com"
+									],
+									"path": [
+										"api",
+										"{{your_id}}",
+										"chargers",
+										"{{item_id}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Wrong payload type",
+					"item": [
+						{
+							"name": "CREATE: Show \"Unsupported Media Type\" if  wrong payload type sent",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 415\", function () {",
+											"    pm.response.to.have.status(415);",
+											"});",
+											"",
+											"pm.test(\"Error msg is shown\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.title).to.eql(\"Unsupported Media Type\");",
+											"    pm.expect(jsonData.status).to.eql(415);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "file",
+									"file": {
+										"src": "/Users/dawid.kankowski/Desktop/REST API - Response Codes.png"
+									},
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://crudcrud.com/api/{{your_id}}/chargers",
+									"protocol": "https",
+									"host": [
+										"crudcrud",
+										"com"
+									],
+									"path": [
+										"api",
+										"{{your_id}}",
+										"chargers"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "EDIT: Show \"Unsupported Media Type\" if  wrong payload type sent",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 415\", function () {",
+											"    pm.response.to.have.status(415);",
+											"});",
+											"",
+											"pm.test(\"Error msg is shown\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.title).to.eql(\"Unsupported Media Type\");",
+											"    pm.expect(jsonData.status).to.eql(415);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.sendRequest({",
+											"    url: 'https://crudcrud.com/api/'+pm.collectionVariables.get(\"your_id\")+'/chargers',",
+											"    method: 'POST',",
+											"    header: {",
+											"        'content-type': 'application/json',",
+											"    },",
+											"    body:{",
+											"        mode: 'raw',",
+											"        raw: JSON.stringify({name: \"Pulsar Plus3\", type: 2, chargingPower: 7.4, color: \"black\", installation: \"none\", warranty: \"2 years\", accessories: true})},",
+											"}, function (err, res) {",
+											"    if (err) {",
+											"        console.log(err);",
+											"    } else {",
+											"    var responseBody = res.json();",
+											"    pm.collectionVariables.set(\"item_id\", responseBody._id);}",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "file",
+									"file": {
+										"src": "/Users/dawid.kankowski/Desktop/REST API - Response Codes.png"
+									},
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://crudcrud.com/api/{{your_id}}/chargers/{{item_id}}",
+									"protocol": "https",
+									"host": [
+										"crudcrud",
+										"com"
+									],
+									"path": [
+										"api",
+										"{{your_id}}",
+										"chargers",
+										"{{item_id}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Missing item_id",
+					"item": [
+						{
+							"name": "EDIT: Show \"Method Not Allowed\" error if missing item_id in request",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 405\", function () {",
+											"    pm.response.to.have.status(405);",
+											"});",
+											"",
+											"pm.test(\"Error msg is shown\", function () {",
+											"    pm.response.to.have.status(\"Method Not Allowed\");",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.sendRequest({",
+											"    url: 'https://crudcrud.com/api/'+pm.collectionVariables.get(\"your_id\")+'/chargers',",
+											"    method: 'POST',",
+											"    header: {",
+											"        'content-type': 'application/json',",
+											"    },",
+											"    body:{",
+											"        mode: 'raw',",
+											"        raw: JSON.stringify({name: \"Pulsar Plus3\", type: 2, chargingPower: 7.4, color: \"black\", installation: \"none\", warranty: \"2 years\", accessories: true})},",
+											"}, function (err, res) {",
+											"    if (err) {",
+											"        console.log(err);",
+											"    } else {",
+											"    var responseBody = res.json();",
+											"    pm.collectionVariables.set(\"item_id\", responseBody._id);}",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{name: \"Pulsar Plus +\", type: 2, colour: \"black\", installation: \"none\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://crudcrud.com/api/{{your_id}}/chargers/",
+									"protocol": "https",
+									"host": [
+										"crudcrud",
+										"com"
+									],
+									"path": [
+										"api",
+										"{{your_id}}",
+										"chargers",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DELETE: Show \"Method Not Allowed\" error if missing item_id in request",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 405\", function () {",
+											"    pm.response.to.have.status(405);",
+											"});",
+											"",
+											"pm.test(\"Error msg is shown\", function () {",
+											"    pm.response.to.have.status(\"Method Not Allowed\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.sendRequest({",
+											"    url: 'https://crudcrud.com/api/'+pm.collectionVariables.get(\"your_id\")+'/chargers',",
+											"    method: 'POST',",
+											"    header: {",
+											"        'content-type': 'application/json',",
+											"    },",
+											"    body:{",
+											"        mode: 'raw',",
+											"        raw: JSON.stringify({name: \"Pulsar Plus3\", type: 2, chargingPower: 7.4, color: \"black\", installation: \"none\", warranty: \"2 years\", accessories: true})},",
+											"}, function (err, res) {",
+											"    if (err) {",
+											"        console.log(err);",
+											"    } else {",
+											"    var responseBody = res.json();",
+											"    pm.collectionVariables.set(\"item_id\", responseBody._id);}",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://crudcrud.com/api/{{your_id}}/chargers/",
+									"protocol": "https",
+									"host": [
+										"crudcrud",
+										"com"
+									],
+									"path": [
+										"api",
+										"{{your_id}}",
+										"chargers",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Invalid item_id",
+					"item": [
+						{
+							"name": "EDIT: Show \"Bad Request\" error if Invalid item id in request",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"pm.test(\"Status is Bad Request\", function () {",
+											"    pm.response.to.have.status(\"Bad Request\")",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.sendRequest({",
+											"    url: 'https://crudcrud.com/api/'+pm.collectionVariables.get(\"your_id\")+'/chargers',",
+											"    method: 'POST',",
+											"    header: {",
+											"        'content-type': 'application/json',",
+											"    },",
+											"    body:{",
+											"        mode: 'raw',",
+											"        raw: JSON.stringify({name: \"Pulsar Plus3\", type: 2, chargingPower: 7.4, color: \"black\", installation: \"none\", warranty: \"2 years\", accessories: true})},",
+											"}, function (err, res) {",
+											"    if (err) {",
+											"        console.log(err);",
+											"    } else {",
+											"    var responseBody = res.json();",
+											"    pm.collectionVariables.set(\"item_id\", responseBody._id);}",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{name: \"Pulsar Plus +\", type: 2, colour: \"black\", installation: \"none\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://crudcrud.com/api/{{your_id}}/chargers/abd$$$%&%&$%&4",
+									"protocol": "https",
+									"host": [
+										"crudcrud",
+										"com"
+									],
+									"path": [
+										"api",
+										"{{your_id}}",
+										"chargers",
+										"abd$$$%&%&$%&4"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DELETE: Show \"Bad Request\" error if Invalid item id in request",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"pm.test(\"Status is Bad Request\", function () {",
+											"    pm.response.to.have.status(\"Bad Request\")",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.sendRequest({",
+											"    url: 'https://crudcrud.com/api/'+pm.collectionVariables.get(\"your_id\")+'/chargers',",
+											"    method: 'POST',",
+											"    header: {",
+											"        'content-type': 'application/json',",
+											"    },",
+											"    body:{",
+											"        mode: 'raw',",
+											"        raw: JSON.stringify({name: \"Pulsar Plus3\", type: 2, chargingPower: 7.4, color: \"black\", installation: \"none\", warranty: \"2 years\", accessories: true})},",
+											"}, function (err, res) {",
+											"    if (err) {",
+											"        console.log(err);",
+											"    } else {",
+											"    var responseBody = res.json();",
+											"    pm.collectionVariables.set(\"item_id\", responseBody._id);}",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://crudcrud.com/api/{{your_id}}/chargers/abd$$$%&%&$%&4",
+									"protocol": "https",
+									"host": [
+										"crudcrud",
+										"com"
+									],
+									"path": [
+										"api",
+										"{{your_id}}",
+										"chargers",
+										"abd$$$%&%&$%&4"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "your_id",
+			"value": "7f76a4dda6864f13bbb3c8eba1932908"
+		},
+		{
+			"key": "item_id",
+			"value": ""
+		},
+		{
+			"key": "response",
+			"value": ""
+		}
+	]
+}
