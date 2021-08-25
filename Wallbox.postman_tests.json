@@ -48,15 +48,11 @@
 							}
 						},
 						"url": {
-							"raw": "https://crudcrud.com/api/{{your_id}}/chargers",
-							"protocol": "https",
+							"raw": "{{url_api}}/chargers",
 							"host": [
-								"crudcrud",
-								"com"
+								"{{url_api}}"
 							],
 							"path": [
-								"api",
-								"{{your_id}}",
 								"chargers"
 							]
 						}
@@ -88,7 +84,7 @@
 							"script": {
 								"exec": [
 									"pm.sendRequest({",
-									"    url: 'https://crudcrud.com/api/'+pm.collectionVariables.get(\"your_id\")+'/chargers',",
+									"    url: pm.environment.get(\"url_api\")+'/chargers',",
 									"    method: 'POST',",
 									"    header: {",
 									"        'content-type': 'application/json',",
@@ -103,7 +99,7 @@
 									"});",
 									"",
 									"pm.sendRequest({",
-									"    url: 'https://crudcrud.com/api/'+pm.collectionVariables.get(\"your_id\")+'/chargers',",
+									"    url: pm.environment.get(\"url_api\")+'/chargers',",
 									"    method: 'POST',",
 									"    header: {",
 									"        'content-type': 'application/json',",
@@ -125,15 +121,11 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://crudcrud.com/api/{{your_id}}/chargers",
-							"protocol": "https",
+							"raw": "{{url_api}}/chargers",
 							"host": [
-								"crudcrud",
-								"com"
+								"{{url_api}}"
 							],
 							"path": [
-								"api",
-								"{{your_id}}",
 								"chargers"
 							]
 						}
@@ -155,7 +147,7 @@
 									"//1. get request with item_id",
 									"//2. assert response ",
 									"pm.sendRequest({",
-									"    url: 'https://crudcrud.com/api/'+pm.collectionVariables.get(\"your_id\")+'/chargers/'+pm.collectionVariables.get(\"item_id\"),",
+									"    url: pm.environment.get(\"url_api\")+'/chargers/'+pm.collectionVariables.get(\"item_id\"),",
 									"    method: 'GET',  ",
 									"}, function (err, res) {",
 									"    if (err) {",
@@ -183,7 +175,7 @@
 							"script": {
 								"exec": [
 									"pm.sendRequest({",
-									"    url: 'https://crudcrud.com/api/'+pm.collectionVariables.get(\"your_id\")+'/chargers',",
+									"    url: pm.environment.get(\"url_api\")+'/chargers',",
 									"    method: 'POST',",
 									"    header: {",
 									"        'content-type': 'application/json',",
@@ -217,15 +209,11 @@
 							}
 						},
 						"url": {
-							"raw": "https://crudcrud.com/api/{{your_id}}/chargers/{{item_id}}",
-							"protocol": "https",
+							"raw": "{{url_api}}/chargers/{{item_id}}",
 							"host": [
-								"crudcrud",
-								"com"
+								"{{url_api}}"
 							],
 							"path": [
-								"api",
-								"{{your_id}}",
 								"chargers",
 								"{{item_id}}"
 							]
@@ -263,7 +251,7 @@
 							"script": {
 								"exec": [
 									"pm.sendRequest({",
-									"    url: 'https://crudcrud.com/api/'+pm.collectionVariables.get(\"your_id\")+'/chargers',",
+									"    url: pm.environment.get(\"url_api\")+'/chargers',",
 									"    method: 'POST',",
 									"    header: {",
 									"        'content-type': 'application/json',",
@@ -322,7 +310,7 @@
 									"//1. get request with item_id",
 									"//2. assert response ",
 									"pm.sendRequest({",
-									"    url: 'https://crudcrud.com/api/'+pm.collectionVariables.get(\"your_id\")+'/chargers/'+pm.collectionVariables.get(\"item_id\"),",
+									"    url: pm.environment.get(\"url_api\")+'/chargers/'+pm.collectionVariables.get(\"item_id\"),",
 									"    method: 'GET',",
 									"}, function (err, res) {",
 									"    if (err) {",
@@ -344,7 +332,7 @@
 							"script": {
 								"exec": [
 									"pm.sendRequest({",
-									"    url: 'https://crudcrud.com/api/'+pm.collectionVariables.get(\"your_id\")+'/chargers',",
+									"    url: pm.environment.get(\"url_api\")+'/chargers',",
 									"    method: 'POST',",
 									"    header: {",
 									"        'content-type': 'application/json',",
@@ -421,15 +409,11 @@
 							}
 						},
 						"url": {
-							"raw": "https://crudcrud.com/api/{{your_id}}/chargers",
-							"protocol": "https",
+							"raw": "{{url_api}}/chargers",
 							"host": [
-								"crudcrud",
-								"com"
+								"{{url_api}}"
 							],
 							"path": [
-								"api",
-								"{{your_id}}",
 								"chargers"
 							]
 						}
@@ -484,15 +468,11 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://crudcrud.com/api/{{your_id}}/chargers",
-							"protocol": "https",
+							"raw": "{{url_api}}/chargers",
 							"host": [
-								"crudcrud",
-								"com"
+								"{{url_api}}"
 							],
 							"path": [
-								"api",
-								"{{your_id}}",
 								"chargers"
 							]
 						}
@@ -522,7 +502,7 @@
 							"script": {
 								"exec": [
 									"pm.sendRequest({",
-									"    url: 'https://crudcrud.com/api/'+pm.collectionVariables.get(\"your_id\")+'/chargers',",
+									"    url: pm.environment.get(\"url_api\")+'/chargers',",
 									"    method: 'POST',",
 									"    header: {",
 									"        'content-type': 'application/json',",
@@ -555,15 +535,11 @@
 							}
 						},
 						"url": {
-							"raw": "https://crudcrud.com/api/{{your_id}}/chargers/{{item_id}}",
-							"protocol": "https",
+							"raw": "{{url_api}}/chargers/{{item_id}}",
 							"host": [
-								"crudcrud",
-								"com"
+								"{{url_api}}"
 							],
 							"path": [
-								"api",
-								"{{your_id}}",
 								"chargers",
 								"{{item_id}}"
 							]
@@ -594,7 +570,7 @@
 							"script": {
 								"exec": [
 									"pm.sendRequest({",
-									"    url: 'https://crudcrud.com/api/'+pm.collectionVariables.get(\"your_id\")+'/chargers',",
+									"    url: pm.environment.get(\"url_api\")+'/chargers',",
 									"    method: 'POST',",
 									"    header: {",
 									"        'content-type': 'application/json',",
@@ -630,15 +606,11 @@
 							}
 						},
 						"url": {
-							"raw": "https://crudcrud.com/api/{{your_id}}/chargers/{{item_id}}",
-							"protocol": "https",
+							"raw": "{{url_api}}/chargers/{{item_id}}",
 							"host": [
-								"crudcrud",
-								"com"
+								"{{url_api}}"
 							],
 							"path": [
-								"api",
-								"{{your_id}}",
 								"chargers",
 								"{{item_id}}"
 							]
@@ -669,7 +641,7 @@
 							"script": {
 								"exec": [
 									"pm.sendRequest({",
-									"    url: 'https://crudcrud.com/api/'+pm.collectionVariables.get(\"your_id\")+'/chargers',",
+									"    url: pm.environment.get(\"url_api\")+'/chargers',",
 									"    method: 'POST',",
 									"    header: {",
 									"        'content-type': 'application/json',",
@@ -693,15 +665,11 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "https://crudcrud.com/api/{{your_id}}/chargers/{{item_id}}",
-							"protocol": "https",
+							"raw": "{{url_api}}/chargers/{{item_id}}",
 							"host": [
-								"crudcrud",
-								"com"
+								"{{url_api}}"
 							],
 							"path": [
-								"api",
-								"{{your_id}}",
 								"chargers",
 								"{{item_id}}"
 							]
@@ -739,7 +707,7 @@
 							"script": {
 								"exec": [
 									"pm.sendRequest({",
-									"    url: 'https://crudcrud.com/api/'+pm.collectionVariables.get(\"your_id\")+'/chargers/'+pm.collectionVariables.get(\"item_id\"),",
+									"    url: pm.environment.get(\"url_api\")+'/chargers/'+pm.collectionVariables.get(\"item_id\"),",
 									"    method: 'DELETE',",
 									"}, function (err, res) {",
 									"    if (err) {",
@@ -764,15 +732,11 @@
 							}
 						},
 						"url": {
-							"raw": "https://crudcrud.com/api/{{your_id}}/chargers/{{item_id}}",
-							"protocol": "https",
+							"raw": "{{url_api}}/chargers/{{item_id}}",
 							"host": [
-								"crudcrud",
-								"com"
+								"{{url_api}}"
 							],
 							"path": [
-								"api",
-								"{{your_id}}",
 								"chargers",
 								"{{item_id}}"
 							]
@@ -805,7 +769,7 @@
 							"script": {
 								"exec": [
 									"pm.sendRequest({",
-									"    url: 'https://crudcrud.com/api/'+pm.collectionVariables.get(\"your_id\")+'/chargers/'+pm.collectionVariables.get(\"item_id\"),",
+									"    url: pm.environment.get(\"url_api\")+'/chargers/'+pm.collectionVariables.get(\"item_id\"),",
 									"    method: 'DELETE',",
 									"}, function (err, res) {",
 									"    if (err) {",
@@ -833,15 +797,11 @@
 							}
 						},
 						"url": {
-							"raw": "https://crudcrud.com/api/{{your_id}}/chargers/{{item_id}}",
-							"protocol": "https",
+							"raw": "{{url_api}}/chargers/{{item_id}}",
 							"host": [
-								"crudcrud",
-								"com"
+								"{{url_api}}"
 							],
 							"path": [
-								"api",
-								"{{your_id}}",
 								"chargers",
 								"{{item_id}}"
 							]
@@ -874,7 +834,7 @@
 							"script": {
 								"exec": [
 									"pm.sendRequest({",
-									"    url: 'https://crudcrud.com/api/'+pm.collectionVariables.get(\"your_id\")+'/chargers/'+pm.collectionVariables.get(\"item_id\"),",
+									"    url: pm.environment.get(\"url_api\")+'/chargers/'+pm.collectionVariables.get(\"item_id\"),",
 									"    method: 'DELETE',",
 									"}, function (err, res) {",
 									"    if (err) {",
@@ -890,15 +850,11 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "https://crudcrud.com/api/{{your_id}}/chargers/{{item_id}}",
-							"protocol": "https",
+							"raw": "{{url_api}}/chargers/{{item_id}}",
 							"host": [
-								"crudcrud",
-								"com"
+								"{{url_api}}"
 							],
 							"path": [
-								"api",
-								"{{your_id}}",
 								"chargers",
 								"{{item_id}}"
 							]
@@ -1173,15 +1129,11 @@
 								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "https://crudcrud.com/api/{{your_id}}/chargers",
-									"protocol": "https",
+									"raw": "{{url_api}}/chargers",
 									"host": [
-										"crudcrud",
-										"com"
+										"{{url_api}}"
 									],
 									"path": [
-										"api",
-										"{{your_id}}",
 										"chargers"
 									]
 								}
@@ -1213,7 +1165,7 @@
 									"script": {
 										"exec": [
 											"pm.sendRequest({",
-											"    url: 'https://crudcrud.com/api/'+pm.collectionVariables.get(\"your_id\")+'/chargers',",
+											"    url: pm.environment.get(\"url_api\")+'/chargers',",
 											"    method: 'POST',",
 											"    header: {",
 											"        'content-type': 'application/json',",
@@ -1237,15 +1189,11 @@
 								"method": "PUT",
 								"header": [],
 								"url": {
-									"raw": "https://crudcrud.com/api/{{your_id}}/chargers/{{item_id}}",
-									"protocol": "https",
+									"raw": "{{url_api}}/chargers/{{item_id}}",
 									"host": [
-										"crudcrud",
-										"com"
+										"{{url_api}}"
 									],
 									"path": [
-										"api",
-										"{{your_id}}",
 										"chargers",
 										"{{item_id}}"
 									]
@@ -1294,15 +1242,11 @@
 									}
 								},
 								"url": {
-									"raw": "https://crudcrud.com/api/{{your_id}}/chargers",
-									"protocol": "https",
+									"raw": "{{url_api}}/chargers",
 									"host": [
-										"crudcrud",
-										"com"
+										"{{url_api}}"
 									],
 									"path": [
-										"api",
-										"{{your_id}}",
 										"chargers"
 									]
 								}
@@ -1334,7 +1278,7 @@
 									"script": {
 										"exec": [
 											"pm.sendRequest({",
-											"    url: 'https://crudcrud.com/api/'+pm.collectionVariables.get(\"your_id\")+'/chargers',",
+											"    url: pm.environment.get(\"url_api\")+'/chargers',",
 											"    method: 'POST',",
 											"    header: {",
 											"        'content-type': 'application/json',",
@@ -1369,15 +1313,11 @@
 									}
 								},
 								"url": {
-									"raw": "https://crudcrud.com/api/{{your_id}}/chargers/{{item_id}}",
-									"protocol": "https",
+									"raw": "{{url_api}}/chargers/{{item_id}}",
 									"host": [
-										"crudcrud",
-										"com"
+										"{{url_api}}"
 									],
 									"path": [
-										"api",
-										"{{your_id}}",
 										"chargers",
 										"{{item_id}}"
 									]
@@ -1414,7 +1354,7 @@
 									"script": {
 										"exec": [
 											"pm.sendRequest({",
-											"    url: 'https://crudcrud.com/api/'+pm.collectionVariables.get(\"your_id\")+'/chargers',",
+											"    url: pm.environment.get(\"url_api\")+'/chargers',",
 											"    method: 'POST',",
 											"    header: {",
 											"        'content-type': 'application/json',",
@@ -1447,15 +1387,11 @@
 									}
 								},
 								"url": {
-									"raw": "https://crudcrud.com/api/{{your_id}}/chargers/",
-									"protocol": "https",
+									"raw": "{{url_api}}/chargers/",
 									"host": [
-										"crudcrud",
-										"com"
+										"{{url_api}}"
 									],
 									"path": [
-										"api",
-										"{{your_id}}",
 										"chargers",
 										""
 									]
@@ -1486,7 +1422,7 @@
 									"script": {
 										"exec": [
 											"pm.sendRequest({",
-											"    url: 'https://crudcrud.com/api/'+pm.collectionVariables.get(\"your_id\")+'/chargers',",
+											"    url: pm.environment.get(\"url_api\")+'/chargers',",
 											"    method: 'POST',",
 											"    header: {",
 											"        'content-type': 'application/json',",
@@ -1510,15 +1446,11 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "https://crudcrud.com/api/{{your_id}}/chargers/",
-									"protocol": "https",
+									"raw": "{{url_api}}/chargers/",
 									"host": [
-										"crudcrud",
-										"com"
+										"{{url_api}}"
 									],
 									"path": [
-										"api",
-										"{{your_id}}",
 										"chargers",
 										""
 									]
@@ -1555,7 +1487,7 @@
 									"script": {
 										"exec": [
 											"pm.sendRequest({",
-											"    url: 'https://crudcrud.com/api/'+pm.collectionVariables.get(\"your_id\")+'/chargers',",
+											"    url: pm.environment.get(\"url_api\")+'/chargers',",
 											"    method: 'POST',",
 											"    header: {",
 											"        'content-type': 'application/json',",
@@ -1588,15 +1520,11 @@
 									}
 								},
 								"url": {
-									"raw": "https://crudcrud.com/api/{{your_id}}/chargers/abd$$$%&%&$%&4",
-									"protocol": "https",
+									"raw": "{{url_api}}/chargers/abd$$$%&%&$%&4",
 									"host": [
-										"crudcrud",
-										"com"
+										"{{url_api}}"
 									],
 									"path": [
-										"api",
-										"{{your_id}}",
 										"chargers",
 										"abd$$$%&%&$%&4"
 									]
@@ -1627,7 +1555,7 @@
 									"script": {
 										"exec": [
 											"pm.sendRequest({",
-											"    url: 'https://crudcrud.com/api/'+pm.collectionVariables.get(\"your_id\")+'/chargers',",
+											"    url: pm.environment.get(\"url_api\")+'/chargers',",
 											"    method: 'POST',",
 											"    header: {",
 											"        'content-type': 'application/json',",
@@ -1651,15 +1579,11 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "https://crudcrud.com/api/{{your_id}}/chargers/abd$$$%&%&$%&4",
-									"protocol": "https",
+									"raw": "{{url_api}}/chargers/abd$$$%&%&$%&4",
 									"host": [
-										"crudcrud",
-										"com"
+										"{{url_api}}"
 									],
 									"path": [
-										"api",
-										"{{your_id}}",
 										"chargers",
 										"abd$$$%&%&$%&4"
 									]
@@ -1699,10 +1623,6 @@
 		},
 		{
 			"key": "item_id",
-			"value": ""
-		},
-		{
-			"key": "response",
 			"value": ""
 		}
 	]
